@@ -7,6 +7,21 @@ jobs:
     steps:
       - checkout
       - run:
+          name: KUBE_CERTIFICATE_AUTHORITY to disk
+          command: 'echo -n "$ENCODED_KUBE_CERTIFICATE_AUTHORITY" | base64 -d > /root/circle/.kube_certificate_authority'
+      - run:
+          name: kubectl configure cluster
+          command: 'kubectl config set-cluster "$KUBE_CLUSTER" --certificate-authority="/root/circle/.kube_certificate_authority" --server="$KUBE_SERVER"'
+      - run:
+          name: kubectl configure credentials
+          command: 'kubectl config set-credentials "circleci" --token="$(echo $ENCODED_KUBE_TOKEN | base64 -d)"'
+      - run:
+          name: kubectl configure context
+          command: 'kubectl config set-context "circleci" --cluster="$KUBE_CLUSTER" --user="circleci" --namespace="formbuilder-monitoring"'
+      - run:
+          name: kubectl use circleci context
+          command: 'kubectl config use-context "circleci"'
+      - run:
           name: deploy grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
 
@@ -14,4 +29,7 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - deploy
+      - deploy:
+          filters:
+            branches:
+              only: master
