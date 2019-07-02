@@ -1,0 +1,2374 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fb-grafana-dashboard
+  namespace: formbuilder-monitoring
+  labels:
+    grafana_dashboard: ""
+data:
+  form-builder-dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "limit": 100,
+            "name": "Annotations & Alerts",
+            "showIn": 0,
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 1,
+      "id": 1,
+      "iteration": 1562057691278,
+      "links": [],
+      "panels": [
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 32,
+          "panels": [],
+          "title": "Submitter Health",
+          "type": "row"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+          ],
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 0,
+            "y": 1
+          },
+          "hideTimeOverride": false,
+          "id": 30,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "sparkline": {
+            "fillColor": "#bf1b00",
+            "full": false,
+            "lineColor": "#bf1b00",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "expr": "sum(resque_jobs_failed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": null,
+          "title": "Failed Submitter Resque Jobs",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+          ],
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 8,
+            "y": 1
+          },
+          "hideTimeOverride": false,
+          "id": 33,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "sparkline": {
+            "fillColor": "#967302",
+            "full": false,
+            "lineColor": "#967302",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "expr": "sum(resque_jobs_pending{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": null,
+          "title": "Pending Submitter Resque Jobs",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+          ],
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 16,
+            "y": 1
+          },
+          "hideTimeOverride": false,
+          "id": 34,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "sparkline": {
+            "fillColor": "#3f6833",
+            "full": false,
+            "lineColor": "#3f6833",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "expr": "sum(resque_jobs_processed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": null,
+          "title": "Processed Submitter Resque Jobs",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "id": 36,
+          "panels": [],
+          "title": "Namespace Quotas",
+          "type": "row"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 11
+          },
+          "id": 38,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "Used",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(container_spec_memory_limit_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "instant": false,
+              "intervalFactor": 1,
+              "legendFormat": "Limit",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Forms Namespace Memory Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 11
+          },
+          "id": 39,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "Used",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(container_spec_memory_limit_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "instant": false,
+              "intervalFactor": 1,
+              "legendFormat": "Limit",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Platform Namespace Memory Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 20
+          },
+          "id": 40,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "Used",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(container_spec_cpu_quota{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "instant": false,
+              "intervalFactor": 1,
+              "legendFormat": "Limit",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Forms Namespace CPU Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 20
+          },
+          "id": 41,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "Used",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(container_spec_cpu_quota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "format": "time_series",
+              "instant": false,
+              "intervalFactor": 1,
+              "legendFormat": "Limit",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Platform Namespace CPU Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 29
+          },
+          "id": 12,
+          "panels": [],
+          "title": "Cloud Platform",
+          "type": "row"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 30
+          },
+          "id": 2,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",pod_name!~\"fb-av-.*\"}) by (pod_name)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Platform Memory Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "Prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 30
+          },
+          "id": 6,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "Memory Requests",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "Value #A",
+              "thresholds": [],
+              "type": "number",
+              "unit": "decbytes"
+            },
+            {
+              "alias": "Memory Usage",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #B",
+              "thresholds": [],
+              "type": "number",
+              "unit": "decbytes"
+            },
+            {
+              "alias": "Memory Usage",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 1,
+              "mappingType": 1,
+              "pattern": "Value #C",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            },
+            {
+              "alias": "Memory Limits",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #D",
+              "thresholds": [],
+              "type": "number",
+              "unit": "decbytes"
+            },
+            {
+              "alias": "Memory Limits",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #E",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "sum(label_replace(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",container_name!=\"\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "B"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_requests_memory_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            },
+            {
+              "expr": "sum(label_replace(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",container_name!=\"\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_requests_memory_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "C"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_limits_memory_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "D"
+            },
+            {
+              "expr": "sum(label_replace(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",container_name!=\"\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_limits_memory_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "E"
+            }
+          ],
+          "title": "Platform Memory Quota",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 39
+          },
+          "id": 15,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",pod_name=~\"fb-av-.*\"}) by (pod_name)",
+              "format": "time_series",
+              "hide": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "ClamAV Memory Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 39
+          },
+          "id": 20,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",pod_name=~\"fb-av-.*\"}) by (pod_name)",
+              "format": "time_series",
+              "hide": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "ClamAV CPU Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 48
+          },
+          "id": 16,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod_name)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Forms Memory Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "Prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 48
+          },
+          "id": 17,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "Memory Requests",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "Value #A",
+              "thresholds": [],
+              "type": "number",
+              "unit": "decbytes"
+            },
+            {
+              "alias": "Memory Usage",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #B",
+              "thresholds": [],
+              "type": "number",
+              "unit": "decbytes"
+            },
+            {
+              "alias": "Memory Usage",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 1,
+              "mappingType": 1,
+              "pattern": "Value #C",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            },
+            {
+              "alias": "Memory Limits",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #D",
+              "thresholds": [],
+              "type": "number",
+              "unit": "decbytes"
+            },
+            {
+              "alias": "Memory Limits",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #E",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "sum(label_replace(container_memory_usage_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\",container_name!=\"\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "B"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_requests_memory_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            },
+            {
+              "expr": "sum(label_replace(container_memory_usage_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\",container_name!=\"\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_requests_memory_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "C"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_limits_memory_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "D"
+            },
+            {
+              "expr": "sum(label_replace(container_memory_usage_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\",container_name!=\"\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_limits_memory_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "E"
+            }
+          ],
+          "title": "Forms Memory Quota",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 57
+          },
+          "id": 18,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",pod_name!~\"fb-av-.*\"}) by (pod_name)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Platform CPU Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "Prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 57
+          },
+          "id": 21,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "CPU Usage",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "Value #A",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "CPU Requests",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #B",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "CPU Requests %",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 1,
+              "mappingType": 1,
+              "pattern": "Value #C",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            },
+            {
+              "alias": "CPU Limits",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #D",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "CPU Limits %",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #E",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "sum(label_replace(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_requests_cpu_cores{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "B"
+            },
+            {
+              "expr": "sum(label_replace(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_requests_cpu_cores{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "legendFormat": "",
+              "refId": "C"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_limits_cpu_cores{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "D"
+            },
+            {
+              "expr": "sum(label_replace(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_limits_cpu_cores{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "E"
+            }
+          ],
+          "title": "Platform CPU Quota",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 66
+          },
+          "id": 19,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod_name)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Forms CPU Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "Prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 66
+          },
+          "id": 22,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "CPU Usage",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "Value #A",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "CPU Requests",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #B",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "CPU Requests %",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 1,
+              "mappingType": 1,
+              "pattern": "Value #C",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            },
+            {
+              "alias": "CPU Limits",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #D",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            },
+            {
+              "alias": "CPU Limits %",
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value #E",
+              "thresholds": [
+                "0.6",
+                "0.8"
+              ],
+              "type": "number",
+              "unit": "percentunit"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "sum(label_replace(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_requests_cpu_cores{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "B"
+            },
+            {
+              "expr": "sum(label_replace(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_requests_cpu_cores{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "legendFormat": "",
+              "refId": "C"
+            },
+            {
+              "expr": "sum(kube_pod_container_resource_limits_cpu_cores{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "D"
+            },
+            {
+              "expr": "sum(label_replace(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}, \"pod\", \"$1\", \"pod_name\", \"(.*)\")) by (pod) / sum(kube_pod_container_resource_limits_cpu_cores{namespace=\"formbuilder-services-$platform_env-$deployment_env\"}) by (pod)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "E"
+            }
+          ],
+          "title": "Forms CPU Quota",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 75
+          },
+          "id": 23,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": true,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sort_desc(avg(sum by (pod_name) (rate(container_network_receive_bytes_total{namespace='formbuilder-platform-$platform_env-$deployment_env'}[5m]))))",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "legendFormat": "Platform Bytes Received (Avg)",
+              "refId": "A"
+            },
+            {
+              "expr": "sort_desc(avg(sum by (pod_name) (rate(container_network_transmit_bytes_total{namespace='formbuilder-platform-$platform_env-$deployment_env'}[5m]))))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "Platform Bytes Transmitted (Avg)",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Platform Network",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 75
+          },
+          "id": 24,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": true,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sort_desc(avg(sum by (pod_name) (rate(container_network_receive_bytes_total{namespace='formbuilder-services-$platform_env-$deployment_env'}[5m]))))",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "legendFormat": "Form Bytes Received (Avg)",
+              "refId": "A"
+            },
+            {
+              "expr": "sort_desc(avg(sum by (pod_name) (rate(container_network_transmit_bytes_total{namespace='formbuilder-services-$platform_env-$deployment_env'}[5m]))))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "Form Bytes Transmitted (Avg)",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Forms Network",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 84
+          },
+          "id": 25,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=\"formbuilder-services-$platform_env-$deployment_env\"}[5m])",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Form Requests",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 84
+          },
+          "id": 27,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "avg(rate(nginx_ingress_controller_request_duration_seconds_sum{exported_namespace = \"formbuilder-services-$platform_env-$deployment_env\"}[5m]) / rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace = \"formbuilder-services-$platform_env-$deployment_env\"}[5m]) > 0) by (ingress)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Form duration",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "s",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 93
+          },
+          "id": 26,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "sort": "max",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(rate(nginx_ingress_controller_requests{exported_namespace = \"formbuilder-services-$platform_env-$deployment_env\"}[5m])) by (status)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Form HTTP Codes",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "refresh": false,
+      "schemaVersion": 16,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "allValue": null,
+            "current": {
+              "tags": [],
+              "text": "test",
+              "value": "test"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "platform_env",
+            "options": [
+              {
+                "selected": true,
+                "text": "test",
+                "value": "test"
+              },
+              {
+                "selected": false,
+                "text": "integration",
+                "value": "integration"
+              },
+              {
+                "selected": false,
+                "text": "live",
+                "value": "live"
+              }
+            ],
+            "query": "test,integration,live",
+            "skipUrlSync": false,
+            "type": "custom"
+          },
+          {
+            "allValue": null,
+            "current": {
+              "tags": [],
+              "text": "dev",
+              "value": "dev"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "deployment_env",
+            "options": [
+              {
+                "selected": true,
+                "text": "dev",
+                "value": "dev"
+              },
+              {
+                "selected": false,
+                "text": "staging",
+                "value": "staging"
+              },
+              {
+                "selected": false,
+                "text": "production",
+                "value": "production"
+              }
+            ],
+            "query": "dev,staging,production",
+            "skipUrlSync": false,
+            "type": "custom"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-2d",
+        "to": "now"
+      },
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "15m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ],
+        "time_options": [
+          "5m",
+          "15m",
+          "1h",
+          "6h",
+          "12h",
+          "24h",
+          "2d",
+          "7d",
+          "30d"
+        ]
+      },
+      "timezone": "browser",
+      "title": "Form Builder",
+      "uid": "-hXgWMWWk",
+      "version": 5
+    }

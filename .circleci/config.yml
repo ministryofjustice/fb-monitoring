@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  deploy:
+    working_directory: ~/circle/
+    docker:
+      - image: asmega/fb-builder:latest
+    steps:
+      - checkout
+      - run:
+          name: deploy grafana dashboard
+          command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy
