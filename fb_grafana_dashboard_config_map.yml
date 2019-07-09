@@ -26,8 +26,8 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 1,
-      "id": 1,
-      "iteration": 1562057691278,
+      "id": 33,
+      "iteration": 1562596724224,
       "links": [],
       "panels": [
         {
@@ -336,15 +336,16 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.memory\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Used",
               "refId": "A"
             },
             {
-              "expr": "sum(container_spec_memory_limit_bytes{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.memory\"})",
               "format": "time_series",
+              "hide": false,
               "instant": false,
               "intervalFactor": 1,
               "legendFormat": "Limit",
@@ -429,14 +430,14 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(container_memory_usage_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.memory\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Used",
               "refId": "A"
             },
             {
-              "expr": "sum(container_spec_memory_limit_bytes{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.memory\"})",
               "format": "time_series",
               "instant": false,
               "intervalFactor": 1,
@@ -522,14 +523,14 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.cpu\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Used",
               "refId": "A"
             },
             {
-              "expr": "sum(container_spec_cpu_quota{namespace=\"formbuilder-services-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.cpu\"})",
               "format": "time_series",
               "instant": false,
               "intervalFactor": 1,
@@ -615,14 +616,14 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.cpu\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Used",
               "refId": "A"
             },
             {
-              "expr": "sum(container_spec_cpu_quota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.cpu\"})",
               "format": "time_series",
               "instant": false,
               "intervalFactor": 1,
@@ -2262,6 +2263,95 @@ data:
             "align": false,
             "alignLevel": null
           }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 93
+          },
+          "id": 42,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sort": "max",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "aws_ecr_repository_image_count{repository_name=~\"formbuilder/.*\"}\t",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "ECR image Count",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         }
       ],
       "refresh": false,
@@ -2370,5 +2460,5 @@ data:
       "timezone": "browser",
       "title": "Form Builder",
       "uid": "-hXgWMWWk",
-      "version": 5
+      "version": 1
     }
