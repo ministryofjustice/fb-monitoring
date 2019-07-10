@@ -1,0 +1,66 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: fb-alerting-publisher-<%= platform_env %>
+  namespace: formbuilder-publisher-<%= platform_env %>
+spec:
+  groups:
+  - name: publisher
+    rules:
+    - alert: KubePodNotReady
+      annotations:
+        message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) has been in a non-ready state for longer than 2 minutes
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodnotready
+      expr: sum by (namespace, pod) (kube_pod_status_phase{job="kube-state-metrics", phase!~"Running", namespace="formbuilder-publisher-<%= platform_env %>"}) > 0
+      for: 2m
+      labels:
+        severity: form-builder
+    - alert: KubePodCrashLooping
+      annotations:
+        message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) is restarting excessively
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodcrashlooping
+      expr: rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace="formbuilder-publisher-<%= platform_env %>"}[10m]) * 60 * 10 > 1
+      for: 5m
+      labels:
+        severity: form-builder
+    - alert: KubeNamespaceQuotaNearing
+      annotations:
+        message: Namespace {{ $labels.namespace }} is using {{ printf "%0.0f" $value }}% of its {{ $labels.resource }} quota.
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded
+      expr: |-
+        100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace="formbuilder-publisher-<%= platform_env %>"}
+          / ignoring(instance, job, type)
+        (kube_resourcequota{job="kube-state-metrics", type="hard", namespace="formbuilder-publisher-<%= platform_env %>"} > 0)
+          > 80
+      for: 5m
+      labels:
+        severity: form-builder
+    - alert: NamespaceMissing
+      annotations:
+        message: Namespace {{ $labels.namespace }} is missing
+        runbook_url: https://example.com/
+      expr: |-
+        absent(kube_namespace_created{namespace="formbuilder-publisher-<%= platform_env %>"})
+      for: 1m
+      labels:
+        severity: form-builder
+    - alert: SlowResponses
+      annotations:
+        message: ingress {{ $labels.ingress }} is serving slow responses over 2 seconds
+        runbook_url: https://example.com/
+      expr: |-
+        avg(rate(nginx_ingress_controller_request_duration_seconds_sum{exported_namespace = "formbuilder-publisher-<%= platform_env %>"}[5m])
+        /
+        rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace = "formbuilder-publisher-<%= platform_env %>"}[5m]) > 0) by (ingress) > 2
+      for: 1m
+      labels:
+        severity: form-builder
+    - alert: ErrorResponses
+      annotations:
+        message: ingress {{ $labels.ingress }} is serving 4XX and 5XX responses
+        runbook_url: https://example.com/
+      expr: |-
+        avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace="formbuilder-publisher-<%= platform_env %>", status=~"4.*|5.*"}[1m]) * 60 > 0) by (ingress)
+      for: 1m
+      labels:
+        severity: form-builder
