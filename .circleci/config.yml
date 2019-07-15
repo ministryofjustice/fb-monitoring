@@ -24,6 +24,139 @@ jobs:
       - run:
           name: deploy grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
+      # platform test
+      - run:
+          name: kubectl configure platform test dev
+          command: 'scripts/circleci_configure_context.sh platform test dev'
+      - run:
+          name: deploy platform alerting to platform test dev
+          command: 'ruby scripts/deploy_alerting.rb platform test dev'
+      - run:
+          name: kubectl configure platform test staging
+          command: 'scripts/circleci_configure_context.sh platform test staging'
+      - run:
+          name: deploy platform alerting to platform test staging
+          command: 'ruby scripts/deploy_alerting.rb platform test staging'
+      - run:
+          name: kubectl configure platform test production
+          command: 'scripts/circleci_configure_context.sh platform test production'
+      - run:
+          name: deploy platform alerting to platform test production
+          command: 'ruby scripts/deploy_alerting.rb platform test production'
+      # platform integration
+      - run:
+          name: kubectl configure platform integration dev
+          command: 'scripts/circleci_configure_context.sh platform integration dev'
+      - run:
+          name: deploy platform alerting to platform integration dev
+          command: 'ruby scripts/deploy_alerting.rb platform integration dev'
+      - run:
+          name: kubectl configure platform integration staging
+          command: 'scripts/circleci_configure_context.sh platform integration staging'
+      - run:
+          name: deploy platform alerting to platform integration staging
+          command: 'ruby scripts/deploy_alerting.rb platform integration staging'
+      - run:
+          name: kubectl configure platform integration production
+          command: 'scripts/circleci_configure_context.sh platform integration production'
+      - run:
+          name: deploy platform alerting to platform integration production
+          command: 'ruby scripts/deploy_alerting.rb platform integration production'
+      # platform live
+      - run:
+          name: kubectl configure platform live dev
+          command: 'scripts/circleci_configure_context.sh platform live dev'
+      - run:
+          name: deploy platform alerting to platform live dev
+          command: 'ruby scripts/deploy_alerting.rb platform live dev'
+      - run:
+          name: kubectl configure platform live staging
+          command: 'scripts/circleci_configure_context.sh platform live staging'
+      - run:
+          name: deploy platform alerting to platform live staging
+          command: 'ruby scripts/deploy_alerting.rb platform live staging'
+      - run:
+          name: kubectl configure platform live production
+          command: 'scripts/circleci_configure_context.sh platform live production'
+      - run:
+          name: deploy platform alerting to platform live production
+          command: 'ruby scripts/deploy_alerting.rb platform live production'
+      # services test
+      - run:
+          name: kubectl configure services test dev
+          command: 'scripts/circleci_configure_context.sh services test dev'
+      - run:
+          name: deploy services alerting to services test dev
+          command: 'ruby scripts/deploy_alerting.rb services test dev'
+      - run:
+          name: kubectl configure services test staging
+          command: 'scripts/circleci_configure_context.sh services test staging'
+      - run:
+          name: deploy services alerting to services test staging
+          command: 'ruby scripts/deploy_alerting.rb services test staging'
+      - run:
+          name: kubectl configure services test production
+          command: 'scripts/circleci_configure_context.sh services test production'
+      - run:
+          name: deploy services alerting to services test production
+          command: 'ruby scripts/deploy_alerting.rb services test production'
+      # services integration
+      - run:
+          name: kubectl configure services integration dev
+          command: 'scripts/circleci_configure_context.sh services integration dev'
+      - run:
+          name: deploy services alerting to services integration dev
+          command: 'ruby scripts/deploy_alerting.rb services integration dev'
+      - run:
+          name: kubectl configure services integration staging
+          command: 'scripts/circleci_configure_context.sh services integration staging'
+      - run:
+          name: deploy services alerting to services integration staging
+          command: 'ruby scripts/deploy_alerting.rb services integration staging'
+      - run:
+          name: kubectl configure services integration production
+          command: 'scripts/circleci_configure_context.sh services integration production'
+      - run:
+          name: deploy services alerting to services integration production
+          command: 'ruby scripts/deploy_alerting.rb services integration production'
+      # services live
+      - run:
+          name: kubectl configure services live dev
+          command: 'scripts/circleci_configure_context.sh services live dev'
+      - run:
+          name: deploy services alerting to services live dev
+          command: 'ruby scripts/deploy_alerting.rb services live dev'
+      - run:
+          name: kubectl configure services live staging
+          command: 'scripts/circleci_configure_context.sh services live staging'
+      - run:
+          name: deploy services alerting to services live staging
+          command: 'ruby scripts/deploy_alerting.rb services live staging'
+      - run:
+          name: kubectl configure services live production
+          command: 'scripts/circleci_configure_context.sh services live production'
+      - run:
+          name: deploy services alerting to services live production
+          command: 'ruby scripts/deploy_alerting.rb services live production'
+      # publisher all envs
+      - run:
+          name: kubectl configure publisher test
+          command: 'scripts/circleci_configure_context.sh publisher test'
+      - run:
+          name: deploy publisher alerting to publisher test
+          command: 'ruby scripts/deploy_alerting.rb publisher test'
+      - run:
+          name: kubectl configure publisher integration
+          command: 'scripts/circleci_configure_context.sh publisher integration'
+      - run:
+          name: deploy publisher alerting to publisher integration
+          command: 'ruby scripts/deploy_alerting.rb publisher integration'
+      - run:
+          name: kubectl configure publisher live
+          command: 'scripts/circleci_configure_context.sh publisher live'
+      - run:
+          name: deploy publisher alerting to publisher live
+          command: 'ruby scripts/deploy_alerting.rb publisher live'
 
 workflows:
   version: 2

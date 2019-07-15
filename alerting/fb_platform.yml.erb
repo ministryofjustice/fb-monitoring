@@ -1,0 +1,55 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: fb-alerting-platform-<%= env_string %>
+  namespace: formbuilder-platform-<%= env_string %>
+spec:
+  groups:
+  - name: platform
+    rules:
+    - alert: KubePodNotReady
+      annotations:
+        message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) has been in a non-ready state for longer than 2 minutes
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodnotready
+      expr: sum by (namespace, pod) (kube_pod_status_phase{job="kube-state-metrics", phase!~"Running", namespace="formbuilder-platform-<%= env_string %>"}) > 0
+      for: 2m
+      labels:
+        severity: form-builder
+    - alert: KubePodCrashLooping
+      annotations:
+        message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) is restarting excessively
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodcrashlooping
+      expr: rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace="formbuilder-platform-<%= env_string %>"}[10m]) * 60 * 10 > 1
+      for: 5m
+      labels:
+        severity: form-builder
+    - alert: KubeNamespaceQuotaNearing
+      annotations:
+        message: Namespace {{ $labels.namespace }} is using {{ printf "%0.0f" $value }}% of its {{ $labels.resource }} quota.
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded
+      expr: |-
+        100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace="formbuilder-platform-<%= env_string %>"}
+          / ignoring(instance, job, type)
+        (kube_resourcequota{job="kube-state-metrics", type="hard", namespace="formbuilder-platform-<%= env_string %>"} > 0)
+          > 80
+      for: 5m
+      labels:
+        severity: form-builder
+    - alert: NamespaceMissing
+      annotations:
+        message: Namespace {{ $labels.namespace }} is missing
+        runbook_url: https://example.com/
+      expr: |-
+        absent(kube_namespace_created{namespace="formbuilder-platform-<%= env_string %>"})
+      for: 1m
+      labels:
+        severity: form-builder
+    - alert: ResqueFailedJobs
+      annotations:
+        message: A failed Resque job has occured in {{ $labels.namespace }}
+        runbook_url: https://example.com/
+      expr: |-
+        delta(resque_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}[10m]) > 0
+      for: 1m
+      labels:
+        severity: form-builder
