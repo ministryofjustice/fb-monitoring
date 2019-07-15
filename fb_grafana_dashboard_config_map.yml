@@ -26,8 +26,8 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 1,
-      "id": 33,
-      "iteration": 1562596724224,
+      "id": 17,
+      "iteration": 1563176789411,
       "links": [],
       "panels": [
         {
@@ -311,7 +311,7 @@ data:
             "x": 0,
             "y": 11
           },
-          "id": 38,
+          "id": 43,
           "legend": {
             "avg": false,
             "current": false,
@@ -336,27 +336,18 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.memory\"})",
+              "expr": "100 * kube_resourcequota{job=\"kube-state-metrics\", type=\"used\", namespace=\"formbuilder-services-$platform_env-$deployment_env\"}\n/ ignoring(instance, job, type)\n(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", namespace=\"formbuilder-services-$platform_env-$deployment_env\"} > 0)\n          ",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "Used",
+              "legendFormat": "{{resource}}",
               "refId": "A"
-            },
-            {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.memory\"})",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "intervalFactor": 1,
-              "legendFormat": "Limit",
-              "refId": "B"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Forms Namespace Memory Usage",
+          "title": "Form Resource Quotas",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -372,11 +363,11 @@ data:
           },
           "yaxes": [
             {
-              "format": "decbytes",
+              "format": "percent",
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -405,7 +396,7 @@ data:
             "x": 12,
             "y": 11
           },
-          "id": 39,
+          "id": 44,
           "legend": {
             "avg": false,
             "current": false,
@@ -430,26 +421,18 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.memory\"})",
+              "expr": "100 * kube_resourcequota{job=\"kube-state-metrics\", type=\"used\", namespace=\"formbuilder-platform-$platform_env-$deployment_env\"}\n/ ignoring(instance, job, type)\n(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", namespace=\"formbuilder-platform-$platform_env-$deployment_env\"} > 0)\n          ",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "Used",
+              "legendFormat": "{{resource}}",
               "refId": "A"
-            },
-            {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.memory\"})",
-              "format": "time_series",
-              "instant": false,
-              "intervalFactor": 1,
-              "legendFormat": "Limit",
-              "refId": "B"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Platform Namespace Memory Usage",
+          "title": "Platform Resource Quotas",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -465,197 +448,11 @@ data:
           },
           "yaxes": [
             {
-              "format": "decbytes",
+              "format": "percent",
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 20
-          },
-          "id": 40,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.cpu\"})",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "Used",
-              "refId": "A"
-            },
-            {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-services-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.cpu\"})",
-              "format": "time_series",
-              "instant": false,
-              "intervalFactor": 1,
-              "legendFormat": "Limit",
-              "refId": "B"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Forms Namespace CPU Usage",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 20
-          },
-          "id": 41,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"used\",resource=\"limits.cpu\"})",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "Used",
-              "refId": "A"
-            },
-            {
-              "expr": "sum(kube_resourcequota{namespace=\"formbuilder-platform-$platform_env-$deployment_env\",type=\"hard\",resource=\"limits.cpu\"})",
-              "format": "time_series",
-              "instant": false,
-              "intervalFactor": 1,
-              "legendFormat": "Limit",
-              "refId": "B"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Platform Namespace CPU Usage",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -678,7 +475,7 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 29
+            "y": 20
           },
           "id": 12,
           "panels": [],
@@ -695,7 +492,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 30
+            "y": 21
           },
           "id": 2,
           "legend": {
@@ -753,7 +550,7 @@ data:
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -778,7 +575,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 30
+            "y": 21
           },
           "id": 6,
           "links": [],
@@ -932,7 +729,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 39
+            "y": 30
           },
           "id": 15,
           "legend": {
@@ -1016,7 +813,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 39
+            "y": 30
           },
           "id": 20,
           "legend": {
@@ -1100,7 +897,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 48
+            "y": 39
           },
           "id": 16,
           "legend": {
@@ -1183,7 +980,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 48
+            "y": 39
           },
           "id": 17,
           "links": [],
@@ -1337,7 +1134,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 57
+            "y": 48
           },
           "id": 18,
           "legend": {
@@ -1420,7 +1217,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 57
+            "y": 48
           },
           "id": 21,
           "links": [],
@@ -1578,7 +1375,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 66
+            "y": 57
           },
           "id": 19,
           "legend": {
@@ -1661,7 +1458,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 66
+            "y": 57
           },
           "id": 22,
           "links": [],
@@ -1821,7 +1618,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 75
+            "y": 66
           },
           "id": 23,
           "legend": {
@@ -1916,7 +1713,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 75
+            "y": 66
           },
           "id": 24,
           "legend": {
@@ -2011,7 +1808,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 84
+            "y": 75
           },
           "id": 25,
           "legend": {
@@ -2098,7 +1895,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 84
+            "y": 75
           },
           "id": 27,
           "legend": {
@@ -2185,7 +1982,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 93
+            "y": 84
           },
           "id": 26,
           "legend": {
@@ -2274,7 +2071,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 93
+            "y": 84
           },
           "id": 42,
           "legend": {
