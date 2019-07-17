@@ -27,7 +27,7 @@ data:
       "gnetId": null,
       "graphTooltip": 1,
       "id": 16,
-      "iteration": 1563350098656,
+      "iteration": 1563350098660,
       "links": [],
       "panels": [
         {
@@ -2161,8 +2161,8 @@ data:
             "allValue": null,
             "current": {
               "tags": [],
-              "text": "test",
-              "value": "test"
+              "text": "live",
+              "value": "live"
             },
             "hide": 0,
             "includeAll": false,
@@ -2171,7 +2171,7 @@ data:
             "name": "platform_env",
             "options": [
               {
-                "selected": true,
+                "selected": false,
                 "text": "test",
                 "value": "test"
               },
@@ -2181,7 +2181,7 @@ data:
                 "value": "integration"
               },
               {
-                "selected": false,
+                "selected": true,
                 "text": "live",
                 "value": "live"
               }
@@ -2194,8 +2194,8 @@ data:
             "allValue": null,
             "current": {
               "tags": [],
-              "text": "dev",
-              "value": "dev"
+              "text": "production",
+              "value": "production"
             },
             "hide": 0,
             "includeAll": false,
@@ -2204,7 +2204,7 @@ data:
             "name": "deployment_env",
             "options": [
               {
-                "selected": true,
+                "selected": false,
                 "text": "dev",
                 "value": "dev"
               },
@@ -2214,7 +2214,7 @@ data:
                 "value": "staging"
               },
               {
-                "selected": false,
+                "selected": true,
                 "text": "production",
                 "value": "production"
               }
