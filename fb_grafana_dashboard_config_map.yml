@@ -26,8 +26,8 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 1,
-      "id": 17,
-      "iteration": 1563176789411,
+      "id": 16,
+      "iteration": 1563350098656,
       "links": [],
       "panels": [
         {
@@ -104,7 +104,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(resque_jobs_failed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "avg(resque_jobs_failed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -185,7 +185,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(resque_jobs_pending{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "avg(resque_jobs_pending{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -266,7 +266,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(resque_jobs_processed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "avg(resque_jobs_processed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
