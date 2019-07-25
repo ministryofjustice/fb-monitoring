@@ -26,8 +26,8 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 1,
-      "id": 16,
-      "iteration": 1563350098660,
+      "id": 25,
+      "iteration": 1564066984825,
       "links": [],
       "panels": [
         {
@@ -104,7 +104,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "avg(resque_jobs_failed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "avg(delayed_jobs_failed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -112,7 +112,7 @@ data:
           ],
           "thresholds": "",
           "timeFrom": null,
-          "title": "Failed Submitter Resque Jobs",
+          "title": "Failed Submitter Delayed Jobs",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -185,7 +185,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "avg(resque_jobs_pending{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
+              "expr": "avg(delayed_jobs_pending{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -193,88 +193,7 @@ data:
           ],
           "thresholds": "",
           "timeFrom": null,
-          "title": "Pending Submitter Resque Jobs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 8,
-            "x": 16,
-            "y": 1
-          },
-          "hideTimeOverride": false,
-          "id": 34,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "#3f6833",
-            "full": false,
-            "lineColor": "#3f6833",
-            "show": true
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "expr": "avg(resque_jobs_processed{namespace=\"formbuilder-platform-$platform_env-$deployment_env\"})",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "refId": "A"
-            }
-          ],
-          "thresholds": "",
-          "timeFrom": null,
-          "title": "Processed Submitter Resque Jobs",
+          "title": "Pending Submitter Delayed Jobs",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
