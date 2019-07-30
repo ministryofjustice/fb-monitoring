@@ -44,12 +44,12 @@ spec:
       for: 1m
       labels:
         severity: form-builder
-    - alert: ResqueFailedJobs
+    - alert: FailedDelayedJobs
       annotations:
-        message: A failed Resque job has occured in {{ $labels.namespace }}
+        message: A failed Delayed job has occured in {{ $labels.namespace }}
         runbook_url: https://example.com/
       expr: |-
-        delta(resque_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}[10m]) > 0
+        delta(delayed_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}[10m]) > 0
       for: 1m
       labels:
         severity: form-builder
