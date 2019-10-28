@@ -2095,17 +2095,12 @@ data:
                 "value": "test"
               },
               {
-                "selected": false,
-                "text": "integration",
-                "value": "integration"
-              },
-              {
                 "selected": true,
                 "text": "live",
                 "value": "live"
               }
             ],
-            "query": "test,integration,live",
+            "query": "test,live",
             "skipUrlSync": false,
             "type": "custom"
           },
