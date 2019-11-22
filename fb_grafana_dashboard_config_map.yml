@@ -2123,17 +2123,12 @@ data:
                 "value": "dev"
               },
               {
-                "selected": false,
-                "text": "staging",
-                "value": "staging"
-              },
-              {
                 "selected": true,
                 "text": "production",
                 "value": "production"
               }
             ],
-            "query": "dev,staging,production",
+            "query": "dev,production",
             "skipUrlSync": false,
             "type": "custom"
           }

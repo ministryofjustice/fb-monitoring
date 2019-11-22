@@ -32,12 +32,6 @@ jobs:
           name: deploy platform alerting to platform test dev
           command: 'ruby scripts/deploy_alerting.rb platform test dev'
       - run:
-          name: kubectl configure platform test staging
-          command: 'scripts/circleci_configure_context.sh platform test staging'
-      - run:
-          name: deploy platform alerting to platform test staging
-          command: 'ruby scripts/deploy_alerting.rb platform test staging'
-      - run:
           name: kubectl configure platform test production
           command: 'scripts/circleci_configure_context.sh platform test production'
       - run:
@@ -50,12 +44,6 @@ jobs:
       - run:
           name: deploy platform alerting to platform live dev
           command: 'ruby scripts/deploy_alerting.rb platform live dev'
-      - run:
-          name: kubectl configure platform live staging
-          command: 'scripts/circleci_configure_context.sh platform live staging'
-      - run:
-          name: deploy platform alerting to platform live staging
-          command: 'ruby scripts/deploy_alerting.rb platform live staging'
       - run:
           name: kubectl configure platform live production
           command: 'scripts/circleci_configure_context.sh platform live production'
@@ -70,12 +58,6 @@ jobs:
           name: deploy services alerting to services test dev
           command: 'ruby scripts/deploy_alerting.rb services test dev'
       - run:
-          name: kubectl configure services test staging
-          command: 'scripts/circleci_configure_context.sh services test staging'
-      - run:
-          name: deploy services alerting to services test staging
-          command: 'ruby scripts/deploy_alerting.rb services test staging'
-      - run:
           name: kubectl configure services test production
           command: 'scripts/circleci_configure_context.sh services test production'
       - run:
@@ -88,12 +70,6 @@ jobs:
       - run:
           name: deploy services alerting to services live dev
           command: 'ruby scripts/deploy_alerting.rb services live dev'
-      - run:
-          name: kubectl configure services live staging
-          command: 'scripts/circleci_configure_context.sh services live staging'
-      - run:
-          name: deploy services alerting to services live staging
-          command: 'ruby scripts/deploy_alerting.rb services live staging'
       - run:
           name: kubectl configure services live production
           command: 'scripts/circleci_configure_context.sh services live production'
