@@ -3,7 +3,10 @@ jobs:
   deploy:
     working_directory: ~/circle/
     docker:
-      - image: asmega/fb-builder:latest
+      - image: $AWS_ECR_ACCOUNT_URL
+        aws_auth:
+            aws_access_key_id: $AWS_ACCESS_KEY_ID
+            aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     steps:
       - checkout
       - run:
