@@ -49,7 +49,7 @@ spec:
         message: A failed Delayed job has occured in {{ $labels.namespace }}
         runbook_url: https://example.com/
       expr: |-
-        delta(delayed_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}[10m]) > 0
+        avg(delayed_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}) > 0
       for: 1m
       labels:
         severity: form-builder
