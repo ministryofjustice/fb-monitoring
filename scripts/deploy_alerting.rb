@@ -26,4 +26,12 @@ end
 
 `kubectl apply -f #{out_path}`
 
+if $?.success?
+  puts "Successfully applied changes for #{alert} to #{platform_env} #{deployment_env}"
+else
+  puts "🔥🔥🔥🔥🔥🔥\n\n"
+  puts "Unable to apply changes for #{alert} to #{platform_env} #{deployment_env}"
+  puts "\n\n🔥🔥🔥🔥🔥🔥"
+end
+
 FileUtils.rm(out_path, force: true)
