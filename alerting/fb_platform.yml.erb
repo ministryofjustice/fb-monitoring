@@ -46,7 +46,7 @@ spec:
         severity: form-builder
     - alert: FailedDelayedJobs
       annotations:
-        message: A failed Delayed job has occured in {{ $labels.namespace }}
+        message: A failed Delayed job has occured in <%= env_string %>
         runbook_url: https://example.com/
       expr: |-
         avg(delayed_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}) > 0
