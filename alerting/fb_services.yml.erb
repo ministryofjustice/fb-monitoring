@@ -14,7 +14,7 @@ spec:
       expr: sum by (namespace, pod) (kube_pod_status_phase{job="kube-state-metrics", phase!~"Running", namespace="formbuilder-services-<%= env_string %>"}) > 0
       for: 2m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: KubePodCrashLooping
       annotations:
         message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) is restarting excessively
@@ -22,7 +22,7 @@ spec:
       expr: rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace="formbuilder-services-<%= env_string %>"}[10m]) * 60 * 10 > 1
       for: 5m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: KubeNamespaceQuotaNearing
       annotations:
         message: Namespace {{ $labels.namespace }} is using {{ printf "%0.0f" $value }}% of its {{ $labels.resource }} quota.
@@ -34,7 +34,7 @@ spec:
           > 80
       for: 5m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: NamespaceMissing
       annotations:
         message: Namespace {{ $labels.namespace }} is missing
@@ -43,7 +43,7 @@ spec:
         absent(kube_namespace_created{namespace="formbuilder-services-<%= env_string %>"})
       for: 1m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: SlowResponses
       annotations:
         message: ingress {{ $labels.ingress }} in {{ $labels.exported_namespace }} is serving slow responses over 3 seconds
@@ -54,7 +54,7 @@ spec:
         rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace = "formbuilder-services-<%= env_string %>"}[5m]) > 0) by (ingress) > 3
       for: 5m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: ClientErrorResponses
       annotations:
         message: ingress {{ $labels.ingress }} in {{ $labels.namespace }} is serving 4XX responses
@@ -63,7 +63,7 @@ spec:
         avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace="formbuilder-services-<%= env_string %>", status=~"4.*"}[1m]) * 60 > 0) by (ingress)
       for: 1m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: ServerErrorResponses
       annotations:
         message: ingress {{ $labels.ingress }} in {{ $labels.namespace }} is serving 5XX responses
@@ -72,4 +72,4 @@ spec:
         avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace="formbuilder-services-<%= env_string %>", status=~"5.*"}[1m]) * 60 > 0) by (ingress)
       for: 1m
       labels:
-        severity: form-builder
+        severity: <%= severity %>

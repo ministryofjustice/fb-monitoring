@@ -14,7 +14,7 @@ spec:
       expr: sum by (namespace, pod) (kube_pod_status_phase{job="kube-state-metrics", phase!~"Running|Succeeded", namespace="formbuilder-platform-<%= env_string %>"}) > 0
       for: 2m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: KubePodCrashLooping
       annotations:
         message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) is restarting excessively
@@ -22,7 +22,7 @@ spec:
       expr: rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace="formbuilder-platform-<%= env_string %>"}[10m]) * 60 * 10 > 1
       for: 5m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: KubeNamespaceQuotaNearing
       annotations:
         message: Namespace {{ $labels.namespace }} is using {{ printf "%0.0f" $value }}% of its {{ $labels.resource }} quota.
@@ -34,7 +34,7 @@ spec:
           > 80
       for: 5m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: NamespaceMissing
       annotations:
         message: Namespace {{ $labels.namespace }} is missing
@@ -43,7 +43,7 @@ spec:
         absent(kube_namespace_created{namespace="formbuilder-platform-<%= env_string %>"})
       for: 1m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
     - alert: FailedDelayedJobs
       annotations:
         message: A failed Delayed job has occured in <%= env_string %>
@@ -52,4 +52,4 @@ spec:
         avg(delayed_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}) > 0
       for: 1m
       labels:
-        severity: form-builder
+        severity: <%= severity %>
