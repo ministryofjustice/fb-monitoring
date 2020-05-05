@@ -8,6 +8,7 @@ alerts = { 'services' => 'alerting/fb_services.yml.erb',
 alert = alerts[ARGV[0]]
 platform_env = ARGV[1] # %w{ test live }
 deployment_env = ARGV[2] # %w{ dev production }
+severity = 'form-builder-low-severity'
 out_path = './out.yml'
 
 raise ArgumentError.new('Please provide namespace/alerts') if alert.nil?
@@ -18,6 +19,7 @@ FileUtils.rm(out_path, force: true)
 
 File.open(out_path, 'w') do |f|
   env_string = "#{platform_env}-#{deployment_env}"
+  severity = 'form-builder' if env_string == 'live-production'
   string = File.read(alert)
   template = ERB.new(string)
   f.write template.result(binding)
