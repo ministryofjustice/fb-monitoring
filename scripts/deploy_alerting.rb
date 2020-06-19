@@ -6,7 +6,7 @@ alerts = { 'services' => 'alerting/fb_services.yml.erb',
            'publisher' => 'alerting/fb_publisher.yml.erb' }
 
 alert = alerts[ARGV[0]]
-platform_env = ARGV[1] # %w{ test live }
+platform_env = ARGV[1] # %w{ pentest test live }
 deployment_env = ARGV[2] # %w{ dev production }
 severity = 'form-builder-low-severity'
 out_path = './out.yml'
