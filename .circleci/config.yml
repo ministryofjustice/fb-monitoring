@@ -27,19 +27,6 @@ jobs:
       - run:
           name: deploy grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
-      # platform pentest
-      - run:
-          name: kubectl configure platform pentest dev
-          command: 'scripts/circleci_configure_context.sh platform pentest dev'
-      - run:
-          name: deploy platform alerting to platform pentest dev
-          command: 'ruby scripts/deploy_alerting.rb platform pentest dev'
-      - run:
-          name: kubectl configure platform pentest production
-          command: 'scripts/circleci_configure_context.sh platform pentest production'
-      - run:
-          name: deploy platform alerting to platform pentest production
-          command: 'ruby scripts/deploy_alerting.rb platform pentest production'
       # platform test
       - run:
           name: kubectl configure platform test dev
@@ -93,12 +80,6 @@ jobs:
           name: deploy services alerting to services live production
           command: 'ruby scripts/deploy_alerting.rb services live production'
       # publisher all envs
-      - run:
-          name: kubectl configure publisher pentest
-          command: 'scripts/circleci_configure_context.sh publisher pentest'
-      - run:
-          name: deploy publisher alerting to publisher pentest
-          command: 'ruby scripts/deploy_alerting.rb publisher pentest'
       - run:
           name: kubectl configure publisher test
           command: 'scripts/circleci_configure_context.sh publisher test'
