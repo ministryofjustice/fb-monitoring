@@ -3,6 +3,8 @@ kind: PrometheusRule
 metadata:
   name: fb-alerting-platform-<%= env_string %>
   namespace: formbuilder-platform-<%= env_string %>
+  labels:
+    prometheus: cloud-platform
 spec:
   groups:
   - name: platform
