@@ -92,6 +92,19 @@ jobs:
       - run:
           name: deploy publisher alerting to publisher live
           command: 'ruby scripts/deploy_alerting.rb publisher live'
+      # hmcts_complaints_adapter all envs
+      - run:
+          name: kubectl configure hmcts_complaints_adapter staging
+          command: 'scripts/circleci_configure_context.sh hmcts_complaints_adapter staging'
+      - run:
+          name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter staging
+          command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter staging'
+      - run:
+          name: kubectl configure hmcts_complaints_adapter production
+          command: 'scripts/circleci_configure_context.sh hmcts_complaints_adapter production'
+      - run:
+          name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter production
+          command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter production'
 
 workflows:
   version: 2
