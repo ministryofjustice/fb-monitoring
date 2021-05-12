@@ -11,10 +11,10 @@ spec:
     rules:
     - alert: KubePodNotReady
       annotations:
-        message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) has been in a non-ready state for longer than 6 minutes
+        message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) has been in a non-ready state for longer than 10 minutes
         runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodnotready
       expr: sum by (namespace, pod) (kube_pod_status_phase{job="kube-state-metrics", phase!~"Running", namespace="formbuilder-services-<%= env_string %>"}) > 0
-      for: 6m
+      for: 10m
       labels:
         severity: <%= severity %>
     - alert: KubePodCrashLooping
