@@ -46,6 +46,12 @@ jobs:
       - run:
           name: deploy publisher alerting to publisher test
           command: 'ruby scripts/deploy_alerting.rb publisher test'
+      - run:
+          name: kubectl configure hmcts_complaints_adapter staging
+          command: 'scripts/circleci_configure_context_eks.sh hmcts_complaints_adapter staging'
+      - run:
+          name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter staging
+          command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter staging'
   deploy:
     working_directory: ~/circle/
     docker:
@@ -165,4 +171,3 @@ workflows:
             branches:
               only:
                 - master
-                - new-live-cluster
