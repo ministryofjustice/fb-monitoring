@@ -36,7 +36,7 @@ jobs:
           command: 'ruby scripts/deploy_alerting.rb platform test dev'
       - run:
           name: kubectl configure platform test production
-          command: 'scripts/circleci_configure_context.sh platform test production'
+          command: 'scripts/circleci_configure_context_eks.sh platform test production'
       - run:
           name: deploy platform alerting to platform test production
           command: 'ruby scripts/deploy_alerting.rb platform test production'
