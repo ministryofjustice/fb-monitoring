@@ -1,5 +1,57 @@
 version: 2
 jobs:
+  deploy_eks:
+    working_directory: ~/circle/
+    docker:
+      - image: $AWS_ECR_ACCOUNT_URL
+        aws_auth:
+            aws_access_key_id: $AWS_ACCESS_KEY_ID
+            aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - checkout
+      - run:
+          name: KUBE_CERTIFICATE_AUTHORITY to disk
+          command: 'echo -n "$EKS_CLUSTER_CERT" | base64 -d > /root/circle/.kube_certificate_authority'
+      - run:
+          name: kubectl configure cluster
+          command: 'kubectl config set-cluster "$EKS_CLUSTER" --certificate-authority="/root/circle/.kube_certificate_authority" --server="$EKS_SERVER"'
+      - run:
+          name: kubectl configure credentials
+          command: 'kubectl config set-credentials "circleci" --token="$(echo $EKS_TOKEN | base64 -d)"'
+      - run:
+          name: kubectl configure context
+          command: 'kubectl config set-context "circleci" --cluster="$EKS_CLUSTER" --user="circleci" --namespace="formbuilder-monitoring"'
+      - run:
+          name: kubectl use circleci context
+          command: 'kubectl config use-context "circleci"'
+      - run:
+          name: deploy grafana dashboard
+          command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
+      # platform test
+      - run:
+          name: kubectl configure platform test dev
+          command: 'scripts/circleci_configure_context_eks.sh platform test dev'
+      - run:
+          name: deploy platform alerting to platform test dev
+          command: 'ruby scripts/deploy_alerting.rb platform test dev'
+      - run:
+          name: kubectl configure platform test production
+          command: 'scripts/circleci_configure_context_eks.sh platform test production'
+      - run:
+          name: deploy platform alerting to platform test production
+          command: 'ruby scripts/deploy_alerting.rb platform test production'
+      - run:
+          name: kubectl configure publisher test
+          command: 'scripts/circleci_configure_context_eks.sh publisher test'
+      - run:
+          name: deploy publisher alerting to publisher test
+          command: 'ruby scripts/deploy_alerting.rb publisher test'
+      - run:
+          name: kubectl configure hmcts_complaints_adapter staging
+          command: 'scripts/circleci_configure_context_eks.sh hmcts_complaints_adapter staging'
+      - run:
+          name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter staging
+          command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter staging'
   deploy:
     working_directory: ~/circle/
     docker:
@@ -114,3 +166,8 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy_eks:
+          filters:
+            branches:
+              only:
+                - master
