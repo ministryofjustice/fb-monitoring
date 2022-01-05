@@ -37,15 +37,6 @@ spec:
       for: 5m
       labels:
         severity: <%= severity %>
-    - alert: NamespaceMissing
-      annotations:
-        message: Namespace {{ $labels.namespace }} is missing
-        runbook_url: https://example.com/
-      expr: |-
-        absent(kube_namespace_created{namespace="formbuilder-platform-<%= env_string %>"})
-      for: 1m
-      labels:
-        severity: <%= severity %>
     - alert: FailedDelayedJobs
       annotations:
         message: A failed Delayed job has occured in <%= env_string %>

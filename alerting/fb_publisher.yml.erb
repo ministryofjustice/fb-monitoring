@@ -37,15 +37,6 @@ spec:
       for: 5m
       labels:
         severity: <%= severity %>
-    - alert: NamespaceMissing
-      annotations:
-        message: Namespace {{ $labels.namespace }} is missing
-        runbook_url: https://example.com/
-      expr: |-
-        absent(kube_namespace_created{namespace="formbuilder-publisher-<%= platform_env %>"})
-      for: 1m
-      labels:
-        severity: <%= severity %>
     - alert: SlowResponses
       annotations:
         message: ingress {{ $labels.ingress }} is serving slow responses over 2 seconds
