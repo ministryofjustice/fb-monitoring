@@ -9,7 +9,7 @@ alerts = {
 }
 
 alert = alerts[ARGV[0]]
-platform_env = ARGV[1] # %w{ test live staging production}
+platform_env = ARGV[1] # %w{ test live staging production }
 deployment_env = ARGV[2] # %w{ dev production }
 severity = 'form-builder-low-severity'
 out_path = './out.yml'
@@ -33,7 +33,11 @@ File.open(out_path, 'w') do |f|
   end
   puts "Environment string => #{env_string}"
 
-  severity = 'form-builder' if %w(live-production live production).include?(env_string)
+  if alert == 'services' && env_string == 'live-production'
+    severity = 'form-builder-400s' # 400s specific channel for live production only
+  elsif %w(live-production live production).include?(env_string)
+    severity = 'form-builder' # high severity alerts channel
+  end
   puts "Severity => #{severity}"
 
   string = File.read(alert)
