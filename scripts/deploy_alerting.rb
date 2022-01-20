@@ -33,7 +33,7 @@ File.open(out_path, 'w') do |f|
   end
   puts "Environment string => #{env_string}"
 
-  if alert == 'services' && env_string == 'live-production'
+  if ARGV[0] == 'services' && env_string == 'live-production'
     severity = 'form-builder-400s' # 400s specific channel for live production only
   elsif %w(live-production live production).include?(env_string)
     severity = 'form-builder' # high severity alerts channel
