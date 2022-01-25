@@ -56,7 +56,7 @@ spec:
         avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace="formbuilder-services-<%= env_string %>", status=~"400|403|404|499"}[1m]) * 60 >= 1) by (ingress)
       for: 1m
       labels:
-        severity: <%= 400s_severity %>
+        severity: <%= four_hundreds_severity %>
     - alert: ServerErrorResponses
       annotations:
         message: ingress {{ $labels.ingress }} in {{ $labels.namespace }} is serving 5XX responses
