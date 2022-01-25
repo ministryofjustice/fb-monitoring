@@ -165,9 +165,9 @@ workflows:
       - deploy:
           filters:
             branches:
-              only: master
+              only: main
       - deploy_eks:
           filters:
             branches:
               only:
-                - master
+                - main
