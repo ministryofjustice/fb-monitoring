@@ -12,6 +12,7 @@ alert = alerts[ARGV[0]]
 platform_env = ARGV[1] # %w{ test live staging production }
 deployment_env = ARGV[2] # %w{ dev production }
 severity = 'form-builder-low-severity'
+400s_severity = 'form-builder-low-severity'
 out_path = './out.yml'
 
 raise ArgumentError.new('Please provide namespace/alerts') if alert.nil?
@@ -34,11 +35,12 @@ File.open(out_path, 'w') do |f|
   puts "Environment string => #{env_string}"
 
   if ARGV[0] == 'services' && env_string == 'live-production'
-    severity = 'form-builder-400s' # 400s specific channel for live production only
+    400s_severity = 'form-builder-400s' # 400s specific channel for live production only
   elsif %w(live-production live production).include?(env_string)
     severity = 'form-builder' # high severity alerts channel
   end
   puts "Severity => #{severity}"
+  puts "400s Severity => #{400s_severity}"
 
   string = File.read(alert)
   template = ERB.new(string)
