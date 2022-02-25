@@ -1,173 +1,283 @@
 version: 2
 jobs:
-  deploy_eks:
+  grafana_dashboard:
     working_directory: ~/circle/
-    docker:
+    docker: &ecr_base_image
       - image: $AWS_ECR_ACCOUNT_URL
         aws_auth:
             aws_access_key_id: $AWS_ACCESS_KEY_ID
             aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     steps:
       - checkout
-      - run:
+      - run: &cert_authority
           name: KUBE_CERTIFICATE_AUTHORITY to disk
           command: 'echo -n "$EKS_CLUSTER_CERT" | base64 -d > /root/circle/.kube_certificate_authority'
-      - run:
+      - run: &configure_cluster
           name: kubectl configure cluster
           command: 'kubectl config set-cluster "$EKS_CLUSTER" --certificate-authority="/root/circle/.kube_certificate_authority" --server="$EKS_SERVER"'
-      - run:
+      - run: &credentials
           name: kubectl configure credentials
           command: 'kubectl config set-credentials "circleci" --token="$(echo $EKS_TOKEN | base64 -d)"'
-      - run:
+      - run: &context
           name: kubectl configure context
           command: 'kubectl config set-context "circleci" --cluster="$EKS_CLUSTER" --user="circleci" --namespace="formbuilder-monitoring"'
-      - run:
+      - run: &circle_context
           name: kubectl use circleci context
           command: 'kubectl config use-context "circleci"'
       - run:
           name: deploy grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
-      # platform test
+  platform_test_dev:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
       - run:
           name: kubectl configure platform test dev
           command: 'scripts/circleci_configure_context_eks.sh platform test dev'
       - run:
           name: deploy platform alerting to platform test dev
           command: 'ruby scripts/deploy_alerting.rb platform test dev'
+  platform_test_production:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
       - run:
           name: kubectl configure platform test production
           command: 'scripts/circleci_configure_context_eks.sh platform test production'
       - run:
           name: deploy platform alerting to platform test production
           command: 'ruby scripts/deploy_alerting.rb platform test production'
+  platform_live_dev:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure platform live dev
+          command: 'scripts/circleci_configure_context_eks.sh platform live dev'
+      - run:
+          name: deploy platform alerting to platform live dev
+          command: 'ruby scripts/deploy_alerting.rb platform live dev'
+  platform_live_production:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure platform live production
+          command: 'scripts/circleci_configure_context_eks.sh platform live production'
+      - run:
+          name: deploy platform alerting to platform live production
+          command: 'ruby scripts/deploy_alerting.rb platform live production'
+  services_test_dev:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure services test dev
+          command: 'scripts/circleci_configure_context_eks.sh services test dev'
+      - run:
+          name: deploy platform alerting to services test dev
+          command: 'ruby scripts/deploy_alerting.rb services test dev'
+  services_test_production:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure services test production
+          command: 'scripts/circleci_configure_context_eks.sh services test production'
+      - run:
+          name: deploy platform alerting to services test production
+          command: 'ruby scripts/deploy_alerting.rb services test production'
+  services_live_dev:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure services live dev
+          command: 'scripts/circleci_configure_context_eks.sh services live dev'
+      - run:
+          name: deploy platform alerting to services live dev
+          command: 'ruby scripts/deploy_alerting.rb services live dev'
+  services_live_production:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure services live production
+          command: 'scripts/circleci_configure_context_eks.sh services live production'
+      - run:
+          name: deploy platform alerting to services live production
+          command: 'ruby scripts/deploy_alerting.rb services live production'
+  publisher_test:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
       - run:
           name: kubectl configure publisher test
           command: 'scripts/circleci_configure_context_eks.sh publisher test'
       - run:
           name: deploy publisher alerting to publisher test
           command: 'ruby scripts/deploy_alerting.rb publisher test'
+  publisher_live:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
+      - run:
+          name: kubectl configure publisher live
+          command: 'scripts/circleci_configure_context_eks.sh publisher live'
+      - run:
+          name: deploy publisher alerting to publisher live
+          command: 'ruby scripts/deploy_alerting.rb publisher live'
+  hmcts_adapter_staging:
+    working_directory: ~/circle/
+    docker: *ecr_base_image
+    steps:
+      - checkout
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
       - run:
           name: kubectl configure hmcts_complaints_adapter staging
           command: 'scripts/circleci_configure_context_eks.sh hmcts_complaints_adapter staging'
       - run:
           name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter staging
           command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter staging'
-  deploy:
+  hmcts_adapter_production:
     working_directory: ~/circle/
-    docker:
-      - image: $AWS_ECR_ACCOUNT_URL
-        aws_auth:
-            aws_access_key_id: $AWS_ACCESS_KEY_ID
-            aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    docker: *ecr_base_image
     steps:
       - checkout
-      - run:
-          name: KUBE_CERTIFICATE_AUTHORITY to disk
-          command: 'echo -n "$ENCODED_KUBE_CERTIFICATE_AUTHORITY" | base64 -d > /root/circle/.kube_certificate_authority'
-      - run:
-          name: kubectl configure cluster
-          command: 'kubectl config set-cluster "$KUBE_CLUSTER" --certificate-authority="/root/circle/.kube_certificate_authority" --server="$KUBE_SERVER"'
-      - run:
-          name: kubectl configure credentials
-          command: 'kubectl config set-credentials "circleci" --token="$(echo $ENCODED_KUBE_TOKEN | base64 -d)"'
-      - run:
-          name: kubectl configure context
-          command: 'kubectl config set-context "circleci" --cluster="$KUBE_CLUSTER" --user="circleci" --namespace="formbuilder-monitoring"'
-      - run:
-          name: kubectl use circleci context
-          command: 'kubectl config use-context "circleci"'
-      - run:
-          name: deploy grafana dashboard
-          command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
-      # platform test
-      - run:
-          name: kubectl configure platform test dev
-          command: 'scripts/circleci_configure_context.sh platform test dev'
-      - run:
-          name: deploy platform alerting to platform test dev
-          command: 'ruby scripts/deploy_alerting.rb platform test dev'
-      - run:
-          name: kubectl configure platform test production
-          command: 'scripts/circleci_configure_context.sh platform test production'
-      - run:
-          name: deploy platform alerting to platform test production
-          command: 'ruby scripts/deploy_alerting.rb platform test production'
-      # platform live
-      - run:
-          name: kubectl configure platform live dev
-          command: 'scripts/circleci_configure_context.sh platform live dev'
-      - run:
-          name: deploy platform alerting to platform live dev
-          command: 'ruby scripts/deploy_alerting.rb platform live dev'
-      - run:
-          name: kubectl configure platform live production
-          command: 'scripts/circleci_configure_context.sh platform live production'
-      - run:
-          name: deploy platform alerting to platform live production
-          command: 'ruby scripts/deploy_alerting.rb platform live production'
-      # services test
-      - run:
-          name: kubectl configure services test dev
-          command: 'scripts/circleci_configure_context.sh services test dev'
-      - run:
-          name: deploy services alerting to services test dev
-          command: 'ruby scripts/deploy_alerting.rb services test dev'
-      - run:
-          name: kubectl configure services test production
-          command: 'scripts/circleci_configure_context.sh services test production'
-      - run:
-          name: deploy services alerting to services test production
-          command: 'ruby scripts/deploy_alerting.rb services test production'
-      # services live
-      - run:
-          name: kubectl configure services live dev
-          command: 'scripts/circleci_configure_context.sh services live dev'
-      - run:
-          name: deploy services alerting to services live dev
-          command: 'ruby scripts/deploy_alerting.rb services live dev'
-      - run:
-          name: kubectl configure services live production
-          command: 'scripts/circleci_configure_context.sh services live production'
-      - run:
-          name: deploy services alerting to services live production
-          command: 'ruby scripts/deploy_alerting.rb services live production'
-      # publisher all envs
-      - run:
-          name: kubectl configure publisher test
-          command: 'scripts/circleci_configure_context.sh publisher test'
-      - run:
-          name: deploy publisher alerting to publisher test
-          command: 'ruby scripts/deploy_alerting.rb publisher test'
-      - run:
-          name: kubectl configure publisher live
-          command: 'scripts/circleci_configure_context.sh publisher live'
-      - run:
-          name: deploy publisher alerting to publisher live
-          command: 'ruby scripts/deploy_alerting.rb publisher live'
-      # hmcts_complaints_adapter all envs
-      - run:
-          name: kubectl configure hmcts_complaints_adapter staging
-          command: 'scripts/circleci_configure_context.sh hmcts_complaints_adapter staging'
-      - run:
-          name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter staging
-          command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter staging'
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run: *credentials
+      - run: *context
+      - run: *circle_context
       - run:
           name: kubectl configure hmcts_complaints_adapter production
-          command: 'scripts/circleci_configure_context.sh hmcts_complaints_adapter production'
+          command: 'scripts/circleci_configure_context_eks.sh hmcts_complaints_adapter production'
       - run:
           name: deploy hmcts_complaints_adapter alerting to hmcts_complaints_adapter production
           command: 'ruby scripts/deploy_alerting.rb hmcts_complaints_adapter production'
 
 workflows:
   version: 2
-  deploy:
+  create_monitoring:
     jobs:
-      - deploy:
-          filters:
-            branches:
-              only: main
-      - deploy_eks:
+      - grafana_dashboard:
           filters:
             branches:
               only:
                 - main
+      - platform_test_dev:
+          filters:
+            branches:
+              only:
+                - main
+      - platform_test_production:
+          filters:
+            branches:
+              only:
+                - main
+      - platform_live_dev:
+          requires:
+            - platform_test_dev
+            - platform_test_production
+      - platform_live_production:
+          requires:
+            - platform_test_dev
+            - platform_test_production
+      - services_test_dev:
+          filters:
+            branches:
+              only:
+                - main
+      - services_test_production:
+          filters:
+            branches:
+              only:
+                - main
+      - services_live_dev:
+          requires:
+            - services_test_dev
+            - services_test_production
+      - services_live_production:
+          requires:
+            - services_test_dev
+            - services_test_production
+      - publisher_test:
+          filters:
+            branches:
+              only:
+                - main
+      - publisher_live:
+          requires:
+            - publisher_test
+      - hmcts_adapter_staging:
+          filters:
+            branches:
+              only:
+                - main
+      - hmcts_adapter_production:
+          requires:
+            - hmcts_adapter_staging
