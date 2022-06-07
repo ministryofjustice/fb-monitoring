@@ -39,7 +39,7 @@ spec:
         severity: <%= severity %>
     - alert: FailedDelayedJobs
       annotations:
-        message: A failed Delayed job has occured in <%= env_string %>
+        message: A Submitter Delayed job has failed in <%= env_string %>
         runbook_url: https://ministryofjustice.github.io/fb-guide-and-runbook/troubleshooting/find-a-failed-submission/#delayed-job-failures
       expr: |-
         avg(delayed_jobs_failed{namespace="formbuilder-platform-<%= env_string %>"}) > 0

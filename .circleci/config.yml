@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - run: &cert_authority
-          name: KUBE_CERTIFICATE_AUTHORITY to disk
+          name: EKS_CLUSTER_CERT to disk
           command: 'echo -n "$EKS_CLUSTER_CERT" | base64 -d > /root/circle/.kube_certificate_authority'
       - run: &configure_cluster
           name: kubectl configure cluster
