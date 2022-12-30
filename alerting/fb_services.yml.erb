@@ -21,7 +21,7 @@ spec:
       annotations:
         message: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) is restarting excessively
         runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodcrashlooping
-      expr: rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace="formbuilder-services-<%= env_string %>"}[10m]) * 60 * 10 > 1
+      expr: rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace="formbuilder-services-<%= env_string %>"}[10m]) * 60 * 10 > 3
       for: 5m
       labels:
         severity: <%= severity %>
