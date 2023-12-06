@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   apply_grafana_dashboard:
     working_directory: ~/circle/
@@ -79,7 +79,6 @@ jobs:
             ruby scripts/deploy_alerting.rb << parameters.destination >> << parameters.platform_env >>
 
 workflows:
-  version: 2
   create_monitoring:
     jobs:
       - apply_grafana_dashboard:
