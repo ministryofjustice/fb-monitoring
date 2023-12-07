@@ -6,30 +6,27 @@ orbs:
 jobs:
   apply_grafana_dashboard:
     working_directory: ~/circle/
-    docker: &ecr_base_image
-      - image: $AWS_ECR_ACCOUNT_URL
-        aws_auth:
-            aws_access_key_id: $AWS_ACCESS_KEY_ID
-            aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    docker:
+      - image: 'cimg/ruby:3.2.2'
     steps:
       - checkout
-      - run: &cert_authority
-          name: EKS_CLUSTER_CERT to disk
-          command: 'echo -n "$EKS_CLUSTER_CERT" | base64 -d > /root/circle/.kube_certificate_authority'
+      - kubernetes/install-kubectl
       - run: &configure_cluster
           name: kubectl configure cluster
-          command: 'kubectl config set-cluster "$EKS_CLUSTER" --certificate-authority="/root/circle/.kube_certificate_authority" --server="$EKS_SERVER"'
-      - run: &credentials
+          command: |
+            echo -n "$EKS_CLUSTER_CERT" | base64 -d > ca.crt
+            kubectl config set-cluster "$EKS_CLUSTER_NAME" --certificate-authority=./ca.crt --server="https://$EKS_CLUSTER_NAME"
+      - run:
           name: kubectl configure credentials
           command: 'kubectl config set-credentials "circleci" --token="$(echo $EKS_TOKEN | base64 -d)"'
-      - run: &context
+      - run:
           name: kubectl configure context
-          command: 'kubectl config set-context "circleci" --cluster="$EKS_CLUSTER" --user="circleci" --namespace="formbuilder-monitoring"'
-      - run: &circle_context
+          command: 'kubectl config set-context "circleci" --cluster="$EKS_CLUSTER_NAME" --user="circleci" --namespace="formbuilder-monitoring"'
+      - run:
           name: kubectl use circleci context
           command: 'kubectl config use-context "circleci"'
       - run:
-          name: deploy grafana dashboard
+          name: apply grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
 
   apply_prometheus_rules:
@@ -46,11 +43,7 @@ jobs:
     steps:
       - checkout
       - kubernetes/install-kubectl
-      - run:
-          name: kubectl configure cluster
-          command: |
-            echo -n "$EKS_CLUSTER_CERT" | base64 -d > ca.crt
-            kubectl config set-cluster "$EKS_CLUSTER_NAME" --certificate-authority=./ca.crt --server="https://$EKS_CLUSTER_NAME"
+      - run: *configure_cluster
       - run:
           name: kubectl configure context
           command: |
@@ -62,7 +55,8 @@ jobs:
 
   apply_hmcts_prometheus_rules:
     working_directory: ~/circle/
-    docker: *ecr_base_image
+    docker:
+      - image: 'cimg/ruby:3.2.2'
     parameters:
       destination:
         type: string
@@ -70,48 +64,44 @@ jobs:
         type: string
     steps:
       - checkout
-      - run: *cert_authority
+      - kubernetes/install-kubectl
       - run: *configure_cluster
-      - run: *credentials
-      - run: *context
-      - run: *circle_context
       - run:
-          name: kubectl configure hmcts_complaints_adapter
+          name: kubectl configure context
           command: |
             scripts/circleci_configure_context_eks.sh << parameters.destination >> << parameters.platform_env >>
       - run:
-          name: apply hmcts_complaints_adapter rules
+          name: apply apply rules
           command: |
             ruby scripts/deploy_alerting.rb << parameters.destination >> << parameters.platform_env >>
 
 workflows:
   create_monitoring:
     jobs:
-#      - apply_grafana_dashboard:
-#          filters:
-#            branches:
-#              only:
-#                - main
-#                - update-circle-config
-
-      - apply_prometheus_rules:
-          name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
-          matrix:
-            parameters:
-#              destination: [platform, services]
-#              platform_env: [test, live]
-#              deployment_env: [dev, production]
-              destination: [platform]
-              platform_env: [test]
-              deployment_env: [dev]
+      - apply_grafana_dashboard:
           context:
             - moj-forms
-            - moj-forms-<< matrix.destination >>-apps
           filters:
             branches:
               only:
                 - main
                 - update-circle-config
+
+#      - apply_prometheus_rules:
+#          name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
+#          matrix:
+#            parameters:
+#              destination: [platform, services]
+#              platform_env: [test, live]
+#              deployment_env: [dev, production]
+#          context:
+#            - moj-forms
+#            - moj-forms-<< matrix.destination >>-apps
+#          filters:
+#            branches:
+#              only:
+#                - main
+#                - update-circle-config
 
 #      - apply_hmcts_prometheus_rules:
 #          matrix:
