@@ -91,7 +91,7 @@ workflows:
           name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
           matrix:
             parameters:
-              destination: [platform, services]
+              destination: [platform] # add `services`
               platform_env: [test, live]
               deployment_env: [dev, production]
           context:
