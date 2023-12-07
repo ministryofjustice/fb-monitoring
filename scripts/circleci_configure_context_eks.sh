@@ -9,7 +9,7 @@ string="${platform_env}_${deployment_env}"
 string=$(echo "$string" | awk '{ gsub(/_$/, ""); print }')
 
 upcase_string=$(echo "$string" | tr a-z A-Z)
-token=$(eval echo "\$EKS_TOKEN_${upcase_string}")
+token=$(eval echo "\$EKS_TOKEN_${upcase_string}" | base64 -d)
 
 user="circleci_${string}"
 namespace="formbuilder-${destination}-${platform_env}-${deployment_env}"

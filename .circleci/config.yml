@@ -78,30 +78,30 @@ jobs:
 workflows:
   create_monitoring:
     jobs:
-      - apply_grafana_dashboard:
-          context:
-            - moj-forms
-          filters:
-            branches:
-              only:
-                - main
-                - update-circle-config
-
-#      - apply_prometheus_rules:
-#          name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
-#          matrix:
-#            parameters:
-#              destination: [platform, services]
-#              platform_env: [test, live]
-#              deployment_env: [dev, production]
+#      - apply_grafana_dashboard:
 #          context:
 #            - moj-forms
-#            - moj-forms-<< matrix.destination >>-apps
 #          filters:
 #            branches:
 #              only:
 #                - main
 #                - update-circle-config
+
+      - apply_prometheus_rules:
+          name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
+          matrix:
+            parameters:
+              destination: [platform, services]
+              platform_env: [test, live]
+              deployment_env: [dev, production]
+          context:
+            - moj-forms
+            - moj-forms-<< matrix.destination >>-apps
+          filters:
+            branches:
+              only:
+                - main
+                - update-circle-config
 
 #      - apply_hmcts_prometheus_rules:
 #          matrix:
