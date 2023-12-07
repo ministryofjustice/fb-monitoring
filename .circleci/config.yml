@@ -96,6 +96,7 @@ workflows:
               deployment_env: [dev, production]
           context:
             - moj-forms
+            - moj-forms-<< matrix.destination >>-apps
           filters:
             branches:
               only:

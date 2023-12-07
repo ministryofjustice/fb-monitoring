@@ -9,11 +9,14 @@ deployment_env=$3
 string="${platform_env}_${deployment_env}"
 string=$(echo "$string" | awk '{ gsub(/_$/, ""); print }')
 
+upcase_string=$(echo "$string" | tr a-z A-Z)
+token=$(eval "echo \$EKS_TOKEN_${upcase_string}" | sed 's/ //g' | base64 -d)
+
 user="circleci_${string}"
 namespace="formbuilder-${destination}-${platform_env}-${deployment_env}"
 
 echo "kubectl configure credentials for user $user"
-kubectl config set-credentials "${user}" --token="$EKS_TOKEN"
+kubectl config set-credentials "${user}" --token="${token}"
 
 echo "kubectl configure context for namespace $namespace"
 kubectl config set-context "${user}" --cluster="$EKS_CLUSTER_NAME" --user="${user}" --namespace="${namespace}"
