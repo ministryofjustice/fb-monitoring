@@ -35,7 +35,7 @@ jobs:
   apply_prometheus_rules:
     working_directory: ~/circle/
     docker:
-      - image: 'cimg/base:stable'
+      - image: 'cimg/ruby:3.2.2'
     parameters:
       destination:
         type: string
