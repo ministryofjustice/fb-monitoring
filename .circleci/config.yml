@@ -11,10 +11,10 @@ jobs:
     steps:
       - checkout
       - kubernetes/install-kubectl
-      - run:
+      - run: &cert_authority
           name: EKS_CLUSTER_CERT to disk
           command: 'echo -n "$EKS_CLUSTER_CERT" | sed "s/ //g" | base64 -d > ca.crt'
-      - run:
+      - run: &configure_cluster
           name: kubectl configure cluster
           command: 'kubectl config set-cluster "$EKS_CLUSTER" --certificate-authority="./ca.crt" --server="$EKS_SERVER"'
       - run:
@@ -30,6 +30,29 @@ jobs:
           name: apply grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
 
+  apply_hmcts_prometheus_rules:
+    working_directory: ~/circle/
+    docker:
+      - image: 'cimg/ruby:3.2.2'
+    parameters:
+      destination:
+        type: string
+      platform_env:
+        type: string
+    steps:
+      - checkout
+      - kubernetes/install-kubectl
+      - run: *cert_authority
+      - run: *configure_cluster
+      - run:
+          name: kubectl configure context
+          command: |
+            scripts/circleci_configure_context_eks.sh << parameters.destination >> << parameters.platform_env >>
+      - run:
+          name: kubectl apply rules
+          command: |
+            ruby scripts/deploy_alerting.rb << parameters.destination >> << parameters.platform_env >>
+
   apply_prometheus_rules:
     working_directory: ~/circle/
     docker:
@@ -44,7 +67,7 @@ jobs:
     steps:
       - checkout
       - kubernetes/install-kubectl
-      - run: &configure_cluster
+      - run:
           name: kubectl configure cluster
           command: |
             echo -n "$EKS_CLUSTER_CERT" | base64 -d > ca.crt
@@ -58,32 +81,22 @@ jobs:
           command: |
             ruby scripts/deploy_alerting.rb << parameters.destination >> << parameters.platform_env >> << parameters.deployment_env >>
 
-  apply_hmcts_prometheus_rules:
-    working_directory: ~/circle/
-    docker:
-      - image: 'cimg/ruby:3.2.2'
-    parameters:
-      destination:
-        type: string
-      platform_env:
-        type: string
-    steps:
-      - checkout
-      - kubernetes/install-kubectl
-      - run: *configure_cluster
-      - run:
-          name: kubectl configure context
-          command: |
-            scripts/circleci_configure_context_eks.sh << parameters.destination >> << parameters.platform_env >>
-      - run:
-          name: apply apply rules
-          command: |
-            ruby scripts/deploy_alerting.rb << parameters.destination >> << parameters.platform_env >>
-
 workflows:
   create_monitoring:
     jobs:
       - apply_grafana_dashboard:
+          filters:
+            branches:
+              only:
+                - main
+                - update-circle-config
+
+      - apply_hmcts_prometheus_rules:
+          name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>"
+          matrix:
+            parameters:
+              destination: [hmcts_complaints_adapter]
+              platform_env: [staging, production]
           filters:
             branches:
               only:
@@ -105,14 +118,3 @@ workflows:
               only:
                 - main
                 - update-circle-config
-
-#      - apply_hmcts_prometheus_rules:
-#          matrix:
-#            parameters:
-#              destination: [hmcts_complaints_adapter]
-#              platform_env: [staging, production]
-#          filters:
-#            branches:
-#              only:
-#                - main
-#                - update-circle-config
