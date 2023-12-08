@@ -89,7 +89,6 @@ workflows:
             branches:
               only:
                 - main
-                - update-circle-config
 
       - apply_hmcts_prometheus_rules:
           name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>"
@@ -101,7 +100,6 @@ workflows:
             branches:
               only:
                 - main
-                - update-circle-config
 
       - apply_prometheus_rules:
           name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
@@ -117,4 +115,3 @@ workflows:
             branches:
               only:
                 - main
-                - update-circle-config
