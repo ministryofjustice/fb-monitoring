@@ -9,7 +9,6 @@ This repository houses:
 Alerting is currently configured across three destinations:
 
 - Platform
-- Publisher
 - Services
 
 ## Deploying Changes to Alerts
@@ -18,7 +17,7 @@ There is a [CircleCI](https://circleci.com/gh/ministryofjustice/fb-monitoring) j
 
 At the moment it is best to manually check the output of the deploys to each environment as it is possible for the build to show green when in fact there was an error returned from the kubectl command.
 
-If you have permision to access the cluster it is also possibly to apply changes from a local machine:
+If you have permission to access the cluster it is also possibly to apply changes from a local machine:
 
 `ruby scripts/deploy_alerting.rb <destination> <platform_env> <deployment_env>`
 
@@ -41,6 +40,6 @@ The kubectl command is unable to retrieve the necessary resource version informa
 
 `kubectl delete prometheusrule fb-alerting-platform-test-dev -n formbuilder-platform-test-dev`
 
-You can run this from your local machine if you have persmission to access the cluster.
+You can run this from your local machine if you have permission to access the cluster.
 
 It is possible you will need to do this for all the destinations, platform envs and deployment envs. Check the output from the [CircleCI](https://circleci.com/gh/ministryofjustice/fb-monitoring) job to ascertain whether this is necessary.
