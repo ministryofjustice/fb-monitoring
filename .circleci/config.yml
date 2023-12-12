@@ -100,6 +100,7 @@ workflows:
             branches:
               only:
                 - main
+                - tweak-alerts
 
       - apply_prometheus_rules:
           name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
@@ -115,3 +116,4 @@ workflows:
             branches:
               only:
                 - main
+                - tweak-alerts
