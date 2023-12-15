@@ -30,29 +30,6 @@ jobs:
           name: apply grafana dashboard
           command: 'kubectl apply -f fb_grafana_dashboard_config_map.yml'
 
-  apply_hmcts_prometheus_rules:
-    working_directory: ~/circle/
-    docker:
-      - image: 'cimg/ruby:3.2.2'
-    parameters:
-      destination:
-        type: string
-      platform_env:
-        type: string
-    steps:
-      - checkout
-      - kubernetes/install-kubectl
-      - run: *cert_authority
-      - run: *configure_cluster
-      - run:
-          name: kubectl configure context
-          command: |
-            scripts/circleci_configure_context_eks.sh << parameters.destination >> << parameters.platform_env >>
-      - run:
-          name: kubectl apply rules
-          command: |
-            ruby scripts/deploy_alerting.rb << parameters.destination >> << parameters.platform_env >>
-
   apply_prometheus_rules:
     working_directory: ~/circle/
     docker:
@@ -85,18 +62,6 @@ workflows:
   create_monitoring:
     jobs:
       - apply_grafana_dashboard:
-          filters:
-            branches:
-              only:
-                - main
-                - tweak-alerts
-
-      - apply_hmcts_prometheus_rules:
-          name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>"
-          matrix:
-            parameters:
-              destination: [hmcts_complaints_adapter]
-              platform_env: [staging, production]
           filters:
             branches:
               only:
