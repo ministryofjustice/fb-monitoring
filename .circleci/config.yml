@@ -11,12 +11,12 @@ jobs:
     steps:
       - checkout
       - kubernetes/install-kubectl
-      - run: &cert_authority
+      - run:
           name: EKS_CLUSTER_CERT to disk
           command: 'echo -n "$EKS_CLUSTER_CERT" | sed "s/ //g" | base64 -d > ca.crt'
-      - run: &configure_cluster
+      - run:
           name: kubectl configure cluster
-          command: 'kubectl config set-cluster "$EKS_CLUSTER" --certificate-authority="./ca.crt" --server="$EKS_SERVER"'
+          command: 'kubectl config set-cluster "$EKS_CLUSTER" --certificate-authority="./ca.crt" --server="https://$EKS_CLUSTER"'
       - run:
           name: kubectl configure credentials
           command: 'kubectl config set-credentials "circleci" --token="$(echo $EKS_TOKEN | base64 -d)"'
@@ -66,7 +66,6 @@ workflows:
             branches:
               only:
                 - main
-                - tweak-alerts
 
       - apply_prometheus_rules:
           name: "apply_prometheus_rules_<< matrix.destination >>_<< matrix.platform_env >>_<< matrix.deployment_env >>"
@@ -82,4 +81,3 @@ workflows:
             branches:
               only:
                 - main
-                - tweak-alerts
