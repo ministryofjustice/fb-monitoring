@@ -4,7 +4,6 @@ require 'fileutils'
 alerts = {
   'services' => 'alerting/fb_services.yml.erb',
   'platform' => 'alerting/fb_platform.yml.erb',
-  'hmcts_complaints_adapter' => 'alerting/fb_hmcts_adapter.yml.erb'
 }
 
 alert = alerts[ARGV[0]]
@@ -14,7 +13,7 @@ severity = 'form-builder-low-severity'
 four_hundreds_severity = 'form-builder-low-severity'
 out_path = './out.yml'
 
-no_deployment_env_needed = %w(hmcts_complaints_adapter)
+no_deployment_env_needed = []
 
 raise ArgumentError.new('Please provide namespace/alerts') if alert.nil?
 raise ArgumentError.new('Please provide platform environment') if platform_env.nil?
