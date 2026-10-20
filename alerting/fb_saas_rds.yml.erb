@@ -1,0 +1,106 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: fb-rds-alerting-saas-<%= env_string %>
+  namespace: formbuilder-saas-<%= env_string %>
+  labels:
+    prometheus: cloud-platform
+spec:
+  groups:
+    - name: forms
+      rules:
+        - alert: formbuilder-saas-<%= env_string %>-Editor-RDS-HighCPUUtilization
+          expr: aws_rds_cpuutilization_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["dbinstance_identifier"]%>"} > 85
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Editor <%= env_string %> - RDS CPU usage > 85%.
+
+        - alert: formbuilder-saas-<%= env_string %>-Editor-RDS-HighDatabaseConnections
+          expr: aws_rds_database_connections_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["dbinstance_identifier"]%>"} > <%=(RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["max_connection"] * 0.75).to_i %>
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Editor <%= env_string %> - RDS number of database connections > <%=(RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["max_connection"] * 0.75).to_i %> (max connections <%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["max_connection"] %>).
+
+        - alert: formbuilder-saas-<%= env_string %>-Editor-RDS-LowStorage
+          expr: aws_rds_free_storage_space_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["dbinstance_identifier"]%>"} < 1024*1024*1024
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Editor <%= env_string %> - RDS storage capacity < 1GB.
+
+        - alert: formbuilder-saas-<%= env_string %>-Editor-RDS-Freeable-Memory
+          expr: aws_rds_freeable_memory_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["dbinstance_identifier"]%>"} < 500*1024*1024
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Editor <%= env_string %> - RDS freeable memory is less than 500MB.
+
+        - alert: formbuilder-saas-<%= env_string %>-Editor-RDS-HighReadLatency
+          expr: aws_rds_read_latency_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["dbinstance_identifier"]%>"} > 0.5
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Editor <%= env_string %> - RDS read latency > 500ms.
+
+        - alert: formbuilder-saas-<%= env_string %>-Editor-RDS-HighWriteLatency
+          expr: aws_rds_write_latency_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["editor"]["rds"]["dbinstance_identifier"]%>"} > 0.5
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Editor <%= env_string %> - RDS write latency > 500ms.
+
+        - alert: formbuilder-saas-<%= env_string %>-Metadata-Api-RDS-HighCPUUtilization
+          expr: aws_rds_cpuutilization_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["dbinstance_identifier"]%>"} > 85
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Metadata-Api <%= env_string %> - RDS CPU usage > 85%.
+
+        - alert: formbuilder-saas-<%= env_string %>-Metadata-Api-RDS-HighDatabaseConnections
+          expr: aws_rds_database_connections_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["dbinstance_identifier"]%>"} > <%=(RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["max_connection"] * 0.75).to_i %>
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Metadata-Api <%= env_string %> - RDS number of database connections > <%=(RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["max_connection"] * 0.75).to_i %> (max connections <%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["max_connection"] %>).
+
+        - alert: formbuilder-saas-<%= env_string %>-Metadata-Api-RDS-LowStorage
+          expr: aws_rds_free_storage_space_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["dbinstance_identifier"]%>"} < 1024*1024*1024
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Metadata-Api <%= env_string %> - RDS storage capacity < 1GB.
+
+        - alert: formbuilder-saas-<%= env_string %>-Metadata-Api-RDS-Freeable-Memory
+          expr: aws_rds_freeable_memory_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["dbinstance_identifier"]%>"} < 500*1024*1024
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Metadata-Api <%= env_string %> - RDS freeable memory is less than 500MB.
+
+        - alert: formbuilder-saas-<%= env_string %>-Metadata-Api-RDS-HighReadLatency
+          expr: aws_rds_read_latency_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["dbinstance_identifier"]%>"} > 0.5
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Metadata-Api <%= env_string %> - RDS read latency > 500ms.
+
+        - alert: formbuilder-saas-<%= env_string %>-Metadata-Api-RDS-HighWriteLatency
+          expr: aws_rds_write_latency_average{dbinstance_identifier="<%=RESOURCE_CONFIG["#{destination}-#{env_string}"]["metadata-api"]["rds"]["dbinstance_identifier"]%>"} > 0.5
+          for: 1m
+          labels:
+            severity: <%= severity %>
+          annotations:
+            message: FormBuilder Metadata-Api <%= env_string %> - RDS write latency > 500ms.

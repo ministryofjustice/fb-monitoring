@@ -1,0 +1,59 @@
+saas-live:
+  editor:
+    rds:
+      dbinstance_identifier: cloud-platform-82ad2a679533ec45
+      max_connection: 190
+  metadata-api:
+    rds:
+      dbinstance_identifier: cloud-platform-0f2486b54a8e2c97
+      max_connection: 190
+
+saas-test:
+  editor:
+    rds:
+      dbinstance_identifier: cloud-platform-39a50b9fc8f3c40b
+      max_connection: 849
+  metadata-api:
+    rds:
+      dbinstance_identifier: cloud-platform-cec65746f0c579c5
+      max_connection: 849
+
+platform-live-dev:
+  submitter:
+    rds:
+      dbinstance_identifier: cloud-platform-8bad841c14b6ec2a
+      max_connection: 840
+  user-datastore:
+    rds:
+      dbinstance_identifier: cloud-platform-6ffb69db9ea51793
+      max_connection: 840
+
+platform-live-production:
+  submitter:
+    rds:
+      dbinstance_identifier: cloud-platform-83a92686e95e340d
+      max_connection: 1710
+  user-datastore:
+    rds:
+      dbinstance_identifier: cloud-platform-0de5d47b58e993d4
+      max_connection: 1710
+
+platform-test-dev:
+  submitter:
+    rds:
+      dbinstance_identifier: cloud-platform-49237c541a078a82
+      max_connection: 410
+  user-datastore:
+    rds:
+      dbinstance_identifier: cloud-platform-6697517e1ff8671a
+      max_connection: 410
+
+platform-test-production:
+  submitter:
+    rds:
+      dbinstance_identifier: cloud-platform-1c3e4ae3f1352cfb
+      max_connection: 840
+  user-datastore:
+    rds:
+      dbinstance_identifier: cloud-platform-62d426f2ce1a73e4
+      max_connection: 840
