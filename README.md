@@ -8,8 +8,29 @@ This repository houses:
 
 Alerting is currently configured across three destinations:
 
+- Saas
 - Platform
 - Services
+
+## Form Builder Namespaces
+
+- formbuilder-base-adapter-test
+- formbuilder-monitoring
+- formbuilder-platform-live-dev
+- formbuilder-platform-live-production
+- formbuilder-platform-test-dev
+- formbuilder-platform-test-production
+- formbuilder-product-page-prod
+- formbuilder-product-page-staging
+- formbuilder-repos
+- formbuilder-saas-live
+- formbuilder-saas-test
+- formbuilder-services-live-dev
+- formbuilder-services-live-production
+- formbuilder-services-test-dev
+- formbuilder-services-test-production
+- hmcts-complaints-formbuilder-adapter-production
+- hmcts-complaints-formbuilder-adapter-staging
 
 ## Deploying Changes to Alerts
 
@@ -19,12 +40,23 @@ At the moment it is best to manually check the output of the deploys to each env
 
 If you have permission to access the cluster it is also possibly to apply changes from a local machine:
 
-`ruby scripts/deploy_alerting.rb <destination> <platform_env> <deployment_env>`
+`ruby scripts/deploy_alerting.rb <destination>.<alert> <platform_env> <deployment_env>` ### `<alert>` is optional
 
 E.g
 
 `ruby scripts/deploy_alerting.rb platform test dev`
 
+OR
+
+`ruby scripts/deploy_alerting.rb platform.rds test dev`
+
+OR
+
+`ruby scripts/deploy_alerting.rb saas live`
+
+OR
+
+`ruby scripts/deploy_alerting.rb saas.rds live`
 
 ## Troubleshooting
 
