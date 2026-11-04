@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: fb-alerting-saas-<%= env_string %>
+  namespace: formbuilder-saas-<%= env_string %>
+  labels:
+    prometheus: cloud-platform
+spec:
+  groups:
+    - name: forms
+      rules:
+        - alert: FailedDelayedJobs
+          annotations:
+            message: A Editor Delayed job has failed in <%= env_string %>
+            runbook_url: https://ministryofjustice.github.io/fb-guide-and-runbook/troubleshooting/find-a-failed-submission/#delayed-job-failures
+          expr: |-
+            avg(delayed_jobs_failed{namespace="formbuilder-saas-<%= env_string %>"}) > 0
+          for: 1m
+          labels:
+            severity: <%= severity %>
