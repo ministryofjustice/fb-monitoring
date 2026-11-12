@@ -75,3 +75,17 @@ The kubectl command is unable to retrieve the necessary resource version informa
 You can run this from your local machine if you have permission to access the cluster.
 
 It is possible you will need to do this for all the destinations, platform envs and deployment envs. Check the output from the [CircleCI](https://circleci.com/gh/ministryofjustice/fb-monitoring) job to ascertain whether this is necessary.
+
+## Commands
+### List prometheusrules
+`kubectl -n <namespace> get prometheusrules`
+
+### Describe prometheusrule
+`kubectl -n <namespace> describe prometheusrules prometheus-custom-rules-<application_name>`
+
+#### eg:
+- `kubectl -n formbuilder-saas-live describe prometheusrules fb-rds-alerting-saas-live`
+
+- `kubectl -n formbuilder-saas-test describe prometheusrules fb-rds-alerting-saas-test`
+
+- `kubectl -n formbuilder-platform-live-production describe prometheusrules fb-alerting-platform-live-production`
