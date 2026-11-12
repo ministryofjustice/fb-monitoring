@@ -4,12 +4,7 @@ require 'yaml'
 
 RESOURCE_CONFIG_PATH = 'config/resource_config.yml'.freeze
 
-RESOURCE_CONFIG = YAML.load_file(
-  RESOURCE_CONFIG_PATH,
-  permitted_classes: [],
-  permitted_symbols: [],
-  aliases: false
-).freeze
+RESOURCE_CONFIG = YAML.load_file(RESOURCE_CONFIG_PATH).freeze
 
 PROMETHEUS_RULES = {
   'saas' => 'alerting/fb_saas.yml.erb',
